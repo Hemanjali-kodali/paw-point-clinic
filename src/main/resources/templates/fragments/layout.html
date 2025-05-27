@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html th:fragment="layout (template, menu)" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetClinic</title>
+
+    <!-- Favicon and CSS -->
+    <link rel="stylesheet" th:href="@{/resources/css/petclinic.css}" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Custom Neutral Style -->
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: plum;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+    .navbar-brand {
+        height: 100px;
+        padding: 10px 15px;
+        font-weight: 600;
+        font-size: 24px;
+        color: #333;
+    }
+
+
+        .navbar-nav > li > a {
+            color: #333 !important;
+            padding: 14px 18px;
+            text-transform: uppercase;
+            transition: background-color 0.3s;
+        }
+
+        .navbar-nav > li > a:hover,
+        .navbar-nav > li.active > a {
+            background-color: #e2e6ea !important;
+            color: #000 !important;
+            border-radius: 4px;
+        }
+
+        .footer-logo {
+            max-width: 160px;
+            margin: 20px auto;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="navbar-header">
+        <a class="navbar-brand" th:href="@{/}">
+            <img th:src="@{/resources/images/Capture1.PNG}" alt="PetClinic Logo" height="50">
+        </a>
+
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav ml-auto">
+
+            <!-- Fragment for reusable menu item -->
+            <li th:fragment="menuItem (path,active,title,glyph,text)" th:classappend="${active==menu ? 'active' : ''}">
+                <a th:href="@{${path}}" th:title="${title}">
+                    <span th:class="'glyphicon glyphicon-'+${glyph}" aria-hidden="true"></span>
+                    <span th:text="${text}">Menu</span>
+                </a>
+            </li>
+
+            <!-- Actual Menu Items -->
+            <li th:replace="::menuItem ('/','home','home page','home','Home')"></li>
+            <li th:replace="::menuItem ('/owners/find','owners','find owners','search','Find owners')"></li>
+            <li th:replace="::menuItem ('/vets.html','vets','veterinarians','th-list','Veterinarians')"></li>
+
+        </ul>
+    </div>
+</nav>
+
+<!-- Main container -->
+<div class="container-fluid mt-4">
+    <div class="container xd-container">
+        <th:block th:include="${template}"></th:block>
+        <br/><br/>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
